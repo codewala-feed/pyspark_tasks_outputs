@@ -560,3 +560,216 @@ Example Row:
 | 2    | 1001     | 55000        |
 
 ---
+
+# Window function tasks sample outputs 
+---
+
+## ✅ 1️⃣ row_number() partitioned by city ordered by price DESC
+
+| order_id | city      | price | row_number |
+| -------- | --------- | ----- | ---------- |
+| 1001     | Bangalore | 55000 | 1          |
+| 1005     | Bangalore | 15000 | 2          |
+| 1010     | Bangalore | 12000 | 3          |
+| 1015     | Bangalore | 5000  | 4          |
+| 1020     | Bangalore | 2000  | 5          |
+
+⚠ Showing only 5 rows from output
+
+---
+
+## ✅ 2️⃣ rank() partitioned by category ordered by price DESC
+
+| order_id | category    | price | rank |
+| -------- | ----------- | ----- | ---- |
+| 1011     | Electronics | 60000 | 1    |
+| 1001     | Electronics | 55000 | 2    |
+| 1008     | Electronics | 45000 | 3    |
+| 1019     | Electronics | 42000 | 4    |
+| 1013     | Electronics | 38000 | 5    |
+
+⚠ Showing only 5 rows from output
+
+---
+
+## ✅ 3️⃣ dense_rank() partitioned by city ordered by rating DESC
+
+| order_id | city      | rating | dense_rank |
+| -------- | --------- | ------ | ---------- |
+| 1001     | Bangalore | 4      | 1          |
+| 1005     | Bangalore | 4      | 1          |
+| 1010     | Bangalore | 4      | 1          |
+| 1015     | Bangalore | 4      | 1          |
+| 1020     | Bangalore | 3      | 2          |
+
+⚠ Showing only 5 rows from output
+
+---
+
+## ✅ 4️⃣ Top 2 Highest Priced Products per Category
+
+| category    | order_id | price |
+| ----------- | -------- | ----- |
+| Electronics | 1011     | 60000 |
+| Electronics | 1001     | 55000 |
+| Furniture   | 1014     | 50000 |
+| Furniture   | 1004     | 40000 |
+| Fashion     | 1015     | 5000  |
+
+⚠ Showing only 5 rows from output
+
+---
+
+## ✅ 5️⃣ Lowest Rated Order per City
+
+| city      | order_id | rating |
+| --------- | -------- | ------ |
+| Bangalore | 1020     | 3      |
+| Chennai   | 1004     | 3      |
+| Delhi     | 1007     | 4      |
+| Hyderabad | 1006     | 5      |
+| Mumbai    | 1003     | 4      |
+
+⚠ Showing only 5 rows from output
+
+---
+
+## ✅ 6️⃣ Running Total of Price (Example: Bangalore)
+
+| order_id | order_date | price | running_total |
+| -------- | ---------- | ----- | ------------- |
+| 1001     | 2023-01-15 | 55000 | 55000         |
+| 1005     | 2023-05-18 | 15000 | 70000         |
+| 1015     | 2023-03-18 | 5000  | 75000         |
+| 1020     | 2023-08-12 | 2000  | 77000         |
+| 1010     | 2023-10-05 | 12000 | 89000         |
+
+⚠ Showing only 5 rows from output
+
+---
+
+## ✅ 7️⃣ Cumulative Quantity per Category (Electronics)
+
+| order_id | quantity | cumulative_qty |
+| -------- | -------- | -------------- |
+| 1001     | 1        | 1              |
+| 1003     | 2        | 3              |
+| 1006     | 1        | 4              |
+| 1008     | 1        | 5              |
+| 1010     | 1        | 6              |
+
+⚠ Showing only 5 rows from output
+
+---
+
+## ✅ 8️⃣ Average Price per Category (Window)
+
+| order_id | category    | price | avg_price_category |
+| -------- | ----------- | ----- | ------------------ |
+| 1001     | Electronics | 55000 | 33900              |
+| 1003     | Electronics | 30000 | 33900              |
+| 1006     | Electronics | 2000  | 33900              |
+| 1008     | Electronics | 45000 | 33900              |
+| 1010     | Electronics | 12000 | 33900              |
+
+⚠ Showing only 5 rows from output
+
+---
+
+## ✅ 9️⃣ Total Revenue per City (Window)
+
+| order_id | city      | price | total_city_price |
+| -------- | --------- | ----- | ---------------- |
+| 1001     | Bangalore | 55000 | 89000            |
+| 1005     | Bangalore | 15000 | 89000            |
+| 1010     | Bangalore | 12000 | 89000            |
+| 1015     | Bangalore | 5000  | 89000            |
+| 1020     | Bangalore | 2000  | 89000            |
+
+⚠ Showing only 5 rows from output
+
+---
+
+## ✅ 🔟 % Contribution to City Revenue
+
+| order_id | city      | price | % contribution |
+| -------- | --------- | ----- | -------------- |
+| 1001     | Bangalore | 55000 | 61.79%         |
+| 1005     | Bangalore | 15000 | 16.85%         |
+| 1010     | Bangalore | 12000 | 13.48%         |
+| 1015     | Bangalore | 5000  | 5.61%          |
+| 1020     | Bangalore | 2000  | 2.24%          |
+
+⚠ Showing only 5 rows from output
+
+---
+
+## ✅ 1️⃣1️⃣ Lag Price Difference (Mumbai)
+
+| order_id | price | prev_price | diff   |
+| -------- | ----- | ---------- | ------ |
+| 1003     | 30000 | null       | null   |
+| 1008     | 45000 | 30000      | 15000  |
+| 1017     | 7000  | 45000      | -38000 |
+| 1012     | 3500  | 7000       | -3500  |
+| —        | —     | —          | —      |
+
+⚠ Showing only 5 rows from output
+
+---
+
+## ✅ 1️⃣2️⃣ Lead Price (Electronics)
+
+| order_id | price | next_price |
+| -------- | ----- | ---------- |
+| 1001     | 55000 | 30000      |
+| 1003     | 30000 | 2000       |
+| 1006     | 2000  | 45000      |
+| 1008     | 45000 | 12000      |
+| 1010     | 12000 | 60000      |
+
+⚠ Showing only 5 rows from output
+
+---
+
+## ✅ 1️⃣3️⃣ Delivery Day Difference (Delhi)
+
+| order_id | delivery_days | prev_delivery | diff |
+| -------- | ------------- | ------------- | ---- |
+| 1002     | 5             | null          | null |
+| 1007     | 6             | 5             | 1    |
+| 1011     | 3             | 6             | -3   |
+| 1016     | 4             | 3             | 1    |
+| —        | —             | —             | —    |
+
+⚠ Showing only 5 rows from output
+
+---
+
+## ✅ 1️⃣4️⃣ Second Highest Price per Category
+
+| category      | second_highest_price |
+| ------------- | -------------------- |
+| Electronics   | 55000                |
+| Furniture     | 42000                |
+| Fashion       | 3500                 |
+| Personal Care | null                 |
+| —             | —                    |
+
+⚠ Showing only 5 rows from output
+
+---
+
+## ✅ 1️⃣5️⃣ Moving Average (Last 3 Orders Overall)
+
+| order_id | price | moving_avg_3 |
+| -------- | ----- | ------------ |
+| 1001     | 55000 | 55000        |
+| 1002     | 200   | 27600        |
+| 1003     | 30000 | 28400        |
+| 1004     | 40000 | 23400        |
+| 1005     | 15000 | 28333        |
+
+⚠ Showing only 5 rows from output
+
+---
